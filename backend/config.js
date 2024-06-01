@@ -1,0 +1,1 @@
+export const MongodbUrl =  'mongodb+srv://bidyutbikashboruah849:ddQQBPUjNs7fNLBk@bidyut.7pqqt6p.mongodb.net/blog?retryWrites=true&w=majority&appName=bidyut'
