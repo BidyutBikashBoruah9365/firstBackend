@@ -36,8 +36,46 @@ app.post("/api/blog", async (req, res) =>{
       author: req.body.author,
       body: req.body.body
     }
-    const BlogData = await Blog(BlogObj)
-    res.status(201).send(BlogData)
+    const BlogData = await Blog.create(BlogObj)
+    return res.status(201).send(BlogData)
+  } catch (error) {
+    res.status(500).send({
+      message: error.message
+    })
+  }
+})
+
+app.get("/api/blog", async (req, res) =>{
+  try {
+    const Blogs = await Blog.find({})
+    return res.status(200).json({
+      totalBlogs: Blogs.length,
+      data: Blogs
+    })
+  } catch (error) {
+    res.status(500).send({
+      message: error.message
+    })
+  }
+})
+
+app.put("/api/blog/:id", async (req, res) =>{
+  try {
+    const {id} = req.params
+    await Blog.findByIdAndUpdate(id, req.body)
+    return res.status(200).json({message:"Blog updated successfully"})
+  } catch (error) {
+    res.status(500).send({
+      message: error.message
+    })
+  }
+})
+
+app.delete("/api/blog/:id", async (req, res) =>{
+  try {
+    const {id} = req.params
+    await Blog.findByIdAndDelete(id)
+    return res.status(200).json({message:"Blog deleted successfully"})
   } catch (error) {
     res.status(500).send({
       message: error.message
